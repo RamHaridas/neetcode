@@ -1,13 +1,14 @@
 
+import argparse
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.asymmetric import rsa
 import binascii
 
-def encrypt_hello():
+def encrypt_hello(text: str):
     # 1. Open the certificate file
     print("Reading server.pem...")
-    with open("server.pem", "rb") as f:
+    with open("server.crt", "rb") as f:
         pem_data = f.read()
 
     # Parse the X.509 certificate
@@ -27,8 +28,8 @@ def encrypt_hello():
     print(f"Exponent (e): {e}")
     print(f"Modulus (n): {n}\n")
 
-    # 3. Convert the word "hello" into an integer (m)
-    message = b"hello"
+    # 3. Convert the input text into an integer (m)
+    message = text.encode('utf-8')
     # Convert bytes to hex, then hex to integer
     m = int(binascii.hexlify(message), 16)
     
@@ -45,4 +46,8 @@ def encrypt_hello():
     print(f"Ciphertext (c): {c}")
 
 if __name__ == "__main__":
-    encrypt_hello()
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--text", help="Text to encrypt")
+    args = parser.parse_args()
+    encrypt_hello(args.text)
