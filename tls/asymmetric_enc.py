@@ -17,7 +17,7 @@ def encrypt(input:str, key:int) -> str:
 
 def decrypt(input:str, key:int) -> str:
     '''
-    Accepts an input string and replaces each char with the char at -5 pos
+    Accepts an input string and replaces each char with the char at +21 pos
     For example: wfr --> ram
     '''
     input = input.lower()
